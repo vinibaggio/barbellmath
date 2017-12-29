@@ -112,7 +112,7 @@ export default class BarbellMath extends Component {
             </TouchableWithoutFeedback>
           </View>
         </View>
-        <View style={{ height: 300, alignItems: 'center'}}>
+        <View style={{ height: 350, alignItems: 'center'}}>
           {sortedPlates.map((plate) => (
             <Plate key={plate} quantity={plates[plate]} plate={plate} />
           ))}

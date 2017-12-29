@@ -9,6 +9,7 @@ let platesAvailable = [
   2.5,
   1.25,
   0.5,
+  0.25,
 ]
 
 export function calculatePlates(totalWeight, barWeight) {
