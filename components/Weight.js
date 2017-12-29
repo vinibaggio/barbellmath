@@ -19,13 +19,8 @@ export function calculatePlates(totalWeight, barWeight) {
   let remaining = sideWeight;
 
   return platesAvailable.reduce((qtys, val) => {
-    let divis = Math.floor(remaining / val)
-    qtys[val] = divis
-
-    if (divis > 0) {
-      remaining = remaining % val
-    }
-
+    qtys[val] = Math.floor(remaining / val)
+    remaining = remaining % val
     return qtys
   }, {})
 }
@@ -47,6 +42,7 @@ export function humanWeight(totalWeight) {
 export function platesForWeight(totalWeight, barWeight) {
   return cleanUnusedPlates(calculatePlates(totalWeight, barWeight))
 }
+
 
 /*
 console.log(20, platesForWeight(20, 20))
