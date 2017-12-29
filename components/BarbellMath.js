@@ -14,21 +14,20 @@ import { setInterval } from 'core-js/library/web/timers';
 
 const bars = [20, 10];
 
-
 export class Plate extends Component{
   render() {
     let bgColor = plateColors[this.props.plate].backgroundColor &&this.props.quantity > 0 ? {backgroundColor: plateColors[this.props.plate].backgroundColor} : {}
     let fgColor = plateColors[this.props.plate].color && this.props.quantity > 0 ? {color: plateColors[this.props.plate].color} : {color: '#fff'}
 
     return (
-      <View style={{width: 100, marginTop:5}}>
+      <View style={{width: 110, marginTop:5}}>
         <Badge
           textStyle={[{ fontWeight: 'bold', fontSize: 20 }, fgColor]}
           containerStyle={[
             this.props.quantity == 0 && styles.disabledPill,
             this.props.quantity > 0 && bgColor
           ]}
-          value={`${this.props.quantity} x ${this.props.plate}`}
+          value={`${this.props.quantity} ✕ ${this.props.plate}`}
         />
       </View>
     )
@@ -44,11 +43,11 @@ export default class BarbellMath extends Component {
   }
 
   updateIndex = (barIdx) => {
-    this.setState({ barIdx })
+    this.setState({ barIdx, weight: Math.max(bars[barIdx], this.state.weight) })
   }
 
   updateWeight = ((newWeight) => {
-    if (newWeight < 20) {
+    if (newWeight < bars[this.state.barIdx]) {
       return;
     }
 
