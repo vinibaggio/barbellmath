@@ -1,0 +1,21 @@
+{
+  "name": "BarbellMath",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest"
+  },
+  "dependencies": {
+    "react": "16.0.0",
+    "react-native": "0.51.0",
+    "react-native-elements": "^0.18.5",
+    "react-native-vector-icons": "^4.4.3"
+  },
+  "jest": {
+    "preset": "react-native"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0"
+  }
+}
