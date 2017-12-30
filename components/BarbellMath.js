@@ -90,14 +90,12 @@ export default class BarbellMath extends Component {
               onPressOut={this.stopLongPress}>
             <Icon
               raised
-              containerStyle={[this.state.weight == bar && {backgroundColor: '#ccc'}]}
+              containerStyle={[this.state.weight == bar && {backgroundColor: '#ddd'}]}
               name='minus'
               type='font-awesome'
             />
             </TouchableWithoutFeedback>
-            <View>
               <Text style={{ fontSize: 50 }}>{this.state.weight}</Text>
-            </View>
             <Text style={{ fontSize: 20, color: '#666', fontVariant: ['small-caps'] }}>kg</Text>
             <TouchableWithoutFeedback
               onPress={() => this.checkQuickPress(1)}
@@ -121,6 +119,9 @@ export default class BarbellMath extends Component {
           selectedIndex={this.state.barIdx}
           buttons={this.barButtons}
           containerStyle={styles.barPicker}
+          textStyle={styles.barPickerText}
+          selectedBackgroundColor={"#666"}
+          selectedTextStyle={{color: '#fff'}}
         />
       </View>
     )
@@ -131,7 +132,13 @@ let styles = StyleSheet.create({
   'barPicker': {
     height: 40,
     padding: 0,
-    marginTop: Platform.OS === 'ios' ? 0 : 15,
+    marginTop: 15,
+    backgroundColor: '#ddd'
+  },
+
+  'barPickerText': {
+    fontWeight: 'bold',
+    color: '#fff'
   },
 
   'disabledPill': {
