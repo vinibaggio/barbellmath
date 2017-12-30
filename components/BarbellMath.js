@@ -57,7 +57,19 @@ export default class BarbellMath extends Component {
   })
 
   startLongPress = (qty) => {
-    this.timer = setInterval(() => this.addWeight(qty), 100);
+    let times = 0;
+    let incr = 0;
+    const threshold = 20;
+    const increments = [1, 2, 5, 10];
+
+    this.timer = setInterval(() => {
+      times++;
+      if (times > threshold) {
+        times = 0;
+        incr = Math.min(increments.length-1, incr+1);
+      }
+      this.addWeight(increments[incr] * qty);
+    }, 100);
   }
 
   stopLongPress = () => {
