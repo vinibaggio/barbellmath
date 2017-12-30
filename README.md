@@ -10,7 +10,13 @@ to change the plates, see `components/Weight.js`. Styling is in `BarbellMath.js`
 
 See it in action:
 
-![Screenshot of BarbellMath](https://github.com/vinibaggio/barbellmath/blob/master/docs/barbellmath.png?raw=true)
+![Screenshot of BarbellMath](https://github.com/vinibaggio/barbellmath/blob/master/docs/usage.png?raw=true)
+
+# How to use:
+
+Pick your bar (20kg or 15kg), press and hold the plus or minus buttons until
+you reach your target weight. The longer you hold the buttons, the larger the
+increments of weight.
 
 Enjoy!
 
