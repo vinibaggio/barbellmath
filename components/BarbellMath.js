@@ -12,7 +12,7 @@ import { Slider, ButtonGroup, Button, Badge, Icon } from 'react-native-elements'
 import { humanWeight, platesForWeight, calculatePlates } from './Weight';
 import { setInterval } from 'core-js/library/web/timers';
 
-const bars = [20, 10];
+const bars = [20, 15];
 
 export class Plate extends Component{
   render() {
