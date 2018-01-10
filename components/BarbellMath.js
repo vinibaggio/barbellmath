@@ -40,6 +40,7 @@ export default class BarbellMath extends Component {
     this.state = { weight: 20, barIdx: 0, adder: 0}
     this.barButtons = bars.map((bar) => humanWeight(bar))
     this.timer = null;
+    this.delayedTimer = null;
   }
 
   updateIndex = (barIdx) => {
@@ -60,27 +61,30 @@ export default class BarbellMath extends Component {
     let times = 0;
     let incr = 0;
     const threshold = 20;
-    const increments = [1, 2, 5, 10];
+    const increments = [1, 5, 10];
 
-    this.timer = setInterval(() => {
-      times++;
-      if (times > threshold) {
-        times = 0;
-        incr = Math.min(increments.length-1, incr+1);
-      }
-      this.addWeight(increments[incr] * qty);
-    }, 100);
+    this.addWeight(increments[incr] * qty);
+
+    this.delayedTimer = setTimeout(() => {
+      clearTimeout(this.delayedTimer);
+      this.delayedTimer = null ;
+
+      this.timer = setInterval(() => {
+        times++;
+        if (times > threshold) {
+          times = 0;
+          incr = Math.min(increments.length-1, incr+1);
+        }
+        this.addWeight(increments[incr] * qty);
+      }, 100);
+    }, 300);
   }
 
   stopLongPress = () => {
     clearInterval(this.timer)
+    clearTimeout(this.delayedTimer);
     this.timer = null;
-  }
-
-  checkQuickPress = (qty) => {
-    if (!this.timer) {
-      this.addWeight(qty)
-    }
+    this.delayedTimer = null;
   }
 
   addWeight = (weight) => {
@@ -97,7 +101,6 @@ export default class BarbellMath extends Component {
         <View style={{ height: 100, alignItems: 'center' }}>
           <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
             <TouchableWithoutFeedback
-              onPress={() => this.checkQuickPress(-1)}
               onPressIn={() => this.startLongPress(-1)}
               onPressOut={this.stopLongPress}>
             <Icon
@@ -110,7 +113,6 @@ export default class BarbellMath extends Component {
               <Text style={{ fontSize: 50 }}>{this.state.weight}</Text>
             <Text style={{ fontSize: 20, color: '#666', fontVariant: ['small-caps'] }}>kg</Text>
             <TouchableWithoutFeedback
-              onPress={() => this.checkQuickPress(1)}
               onPressIn={() => this.startLongPress(1)}
               onPressOut={this.stopLongPress}>
               <Icon
