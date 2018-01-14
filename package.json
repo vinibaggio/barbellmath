@@ -10,7 +10,9 @@
     "react": "16.0.0",
     "react-native": "0.51.0",
     "react-native-elements": "^0.18.5",
-    "react-native-vector-icons": "^4.4.3"
+    "react-native-vector-icons": "^4.4.3",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2"
   },
   "jest": {
     "preset": "react-native"

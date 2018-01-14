@@ -35,8 +35,8 @@ export function cleanUnusedPlates(plateQtys) {
   }, {})
 }
 
-export function humanWeight(totalWeight) {
-  return `${totalWeight}kg`
+export function humanWeight(unit, totalWeight) {
+  return `${totalWeight}${unit}`
 }
 
 export function platesForWeight(totalWeight, barWeight) {

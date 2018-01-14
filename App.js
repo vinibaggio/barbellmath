@@ -5,21 +5,30 @@
  */
 
 import React, { Component } from 'react';
+import { Provider, connect } from 'react-redux';
 import {
   Platform,
   StyleSheet,
-  Text,
   View
 } from 'react-native';
 
-import BarbellMath from './components/BarbellMath'
+import configureStore from './configureStore';
+
+import BarbellMath from './components/math/BarbellMath'
 
 export default class App extends Component<{}> {
+  constructor(props) {
+    super(props);
+    this.store = configureStore();
+  }
+
   render() {
     return (
-      <View style={styles.container}>
-        <BarbellMath />
-      </View>
+      <Provider store={this.store}>
+        <View style={styles.container}>
+          <BarbellMath />
+        </View>
+      </Provider>
     );
   }
 }
