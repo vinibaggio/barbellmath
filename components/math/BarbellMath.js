@@ -7,20 +7,19 @@ import {
   TouchableWithoutFeedback,
   StyleSheet
 } from 'react-native';
-import { Slider, ButtonGroup, Button, Badge, Icon } from 'react-native-elements';
+import { ButtonGroup } from 'react-native-elements';
+import LongPressButton from '../ui/LongPressButton'
 import { calculatePlates } from '../weights/Weight';
 import Plate from './Plate'
 
-import {setUnitKG, setUnitLB} from './actions'
+import {setUnit} from './actions'
 
 class BarbellMath extends Component {
   constructor(props) {
     super(props)
 
     const unitIdx = this.props.units.indexOf(this.props.currentUnit);
-    this.state = { weight: Math.max.apply(Math, this.props.bars), barIdx: 0, unitIdx: unitIdx },
-    this.timer = null;
-    this.delayedTimer = null;
+    this.state = { weight: Math.max.apply(Math, this.props.bars), barIdx: 0, unitIdx: unitIdx };
   }
 
   componentWillReceiveProps(nextProps) {
@@ -36,11 +35,7 @@ class BarbellMath extends Component {
   }
 
   updateUnit = (unitIdx) => {
-    if (this.props.units[unitIdx] == 'kg') {
-      this.props.dispatchSetKG();
-    } else {
-      this.props.dispatchSetLB();
-    }
+    this.props.dispatchSetUnit(this.props.units[unitIdx]);
     this.setState({unitIdx: unitIdx});
   }
 
@@ -54,34 +49,15 @@ class BarbellMath extends Component {
     })
   })
 
-  startLongPress = (qty) => {
-    let times = 0;
-    let incr = 0;
-    const threshold = 20;
-    const increments = [1, 5, 10];
+  onLongPressTick = (tick, incr) => {
+    let multiplier = 1;
+    if (tick >= 30) {
+      multiplier = 10;
+    } else if (tick >= 20) {
+      multiplier = 5;
+    }
 
-    this.addWeight(increments[incr] * qty);
-
-    this.delayedTimer = setTimeout(() => {
-      clearTimeout(this.delayedTimer);
-      this.delayedTimer = null ;
-
-      this.timer = setInterval(() => {
-        times++;
-        if (times > threshold) {
-          times = 0;
-          incr = Math.min(increments.length-1, incr+1);
-        }
-        this.addWeight(increments[incr] * qty);
-      }, 100);
-    }, 300);
-  }
-
-  stopLongPress = () => {
-    clearInterval(this.timer)
-    clearTimeout(this.delayedTimer);
-    this.timer = null;
-    this.delayedTimer = null;
+    this.addWeight(multiplier * incr);
   }
 
   addWeight = (weight) => {
@@ -127,25 +103,15 @@ class BarbellMath extends Component {
 
         <View style={{ height: 100, alignItems: 'center' }}>
           <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center' }}>
-            <TouchableWithoutFeedback
-              onPressIn={() => this.startLongPress(-1)}
-              onPressOut={this.stopLongPress}>
-            <Icon
-              raised
-              containerStyle={[this.state.weight == bar && {backgroundColor: '#ddd'}]}
-              name='minus'
-              type='font-awesome'
-            />
-            </TouchableWithoutFeedback>
-            <TouchableWithoutFeedback
-              onPressIn={() => this.startLongPress(1)}
-              onPressOut={this.stopLongPress}>
-              <Icon
-                raised
-                name='plus'
-                type='font-awesome'
+            <LongPressButton
+              icon='minus'
+              onLongPressTick={(tick) => this.onLongPressTick(tick, -1)}
+              disabled={this.state.weight == bar}
               />
-            </TouchableWithoutFeedback>
+            <LongPressButton
+              icon='plus'
+              onLongPressTick={(tick) => this.onLongPressTick(tick, 1)}
+              />
           </View>
         </View>
       </View>
@@ -178,17 +144,17 @@ function mapStateToProps (state) {
     units: state.weights.units,
     bars: state.weights.bars,
     plates: state.weights.plates,
-    currentUnit: state.weights.currentUnit,
+    currentUnit: state.gym.unit,
+    gymName: state.gym.name,
     humanWeight: function(weight) {
-      return `${weight}${state.weights.currentUnit}`
+      return `${weight}${state.gym.unit}`
     }
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    dispatchSetLB: () => dispatch(setUnitLB()),
-    dispatchSetKG: () => dispatch(setUnitKG()),
+    dispatchSetUnit: (unit) => dispatch(setUnit(unit)),
   }
 }
 

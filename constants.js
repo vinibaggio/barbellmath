@@ -1,3 +1,3 @@
 
-export const SET_UNIT_LB = 'set_unit_lb';
-export const SET_UNIT_KG = 'set_unit_kg';
+export const SET_UNIT = 'set_unit';
+export const SET_NAME = 'set_name';

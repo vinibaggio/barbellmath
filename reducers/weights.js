@@ -1,7 +1,6 @@
 
 import {
-  SET_UNIT_LB,
-  SET_UNIT_KG,
+  SET_UNIT,
 } from '../constants'
 
 const plates = {
@@ -31,7 +30,6 @@ const bars = {
 }
 
 const initialState = {
-  currentUnit: 'kg',
   plates: plates.kg,
   bars: bars.kg,
   units: ['kg', 'lb'],
@@ -39,10 +37,8 @@ const initialState = {
 
 export default function weightReducer(state = initialState, action) {
   switch (action.type) {
-    case SET_UNIT_KG:
-      return { ...state, currentUnit: 'kg', plates: plates.kg, bars: bars.kg};
-    case SET_UNIT_LB:
-      return { ...state, currentUnit: 'lb', plates: plates.lb, bars: bars.lb };
+    case SET_UNIT:
+      return { ...state, plates: plates[action.unit], bars: bars[action.unit]};
     default:
       return state;
   }

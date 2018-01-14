@@ -1,16 +1,10 @@
 import {
-  SET_UNIT_KG,
-  SET_UNIT_LB
+  SET_UNIT,
 } from '../../constants';
 
-export function setUnitKG() {
+export function setUnit(unit) {
   return {
-    type: SET_UNIT_KG,
-  };
-}
-
-export function setUnitLB() {
-  return {
-    type: SET_UNIT_LB,
+    type: SET_UNIT,
+    unit: unit,
   };
 }
